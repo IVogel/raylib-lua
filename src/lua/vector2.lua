@@ -5,13 +5,13 @@ local type   = type
 
 local math_sqrt = math.sqrt
 
-local function Vector2(x, y, z)
+local function Vector2(x, y)
     if istype("Vector2", other) then
         return new("Vector2", x.x, x.y)
-    elseif type(x) == "number" and type(y) == "number" and type(z) == "number" then
-        return new("Vector2", x, y, z)
+    elseif type(x) == "number" and type(y) == "number" then
+        return new("Vector2", x, y)
     else
-        return new("Vector2", 0, 0, 0)
+        return new("Vector2", 0, 0)
     end
 end
 
@@ -58,13 +58,33 @@ function VECTOR2:LengthSqr()
 end
 
 -- Just for the compatibility with Vector3
-function VECTOR2:Length2D()
-    return math_sqrt(self.x * self.x + self.y * self.y)
+VECTOR2.Length2D    = VECTOR2.Length
+VECTOR2.Length2DSqr = VECTOR2.LengthSqr
+
+function VECTOR2:Distance(other)
+    if istype("Vector2", other) then
+        local dx = self.x - other.x
+        local dy = self.y - other.y
+        local d  = dx * dx + dy * dy
+        if d < 5.96e-08 then return 0 end
+        return math_sqrt(d)
+    else
+        error("Vector2 expected, got " .. type(other))
+    end
 end
 
-function VECTOR2:Length2DSqr()
-    return self.x * self.x + self.y * self.y
+function VECTOR2:DistanceSqr(other)
+    if istype("Vector2", other) then
+        local dx = self.x - other.x
+        local dy = self.y - other.y
+        return dx * dx + dy * dy
+    else
+        error("Vector2 expected, got " .. type(other))
+    end
 end
+
+VECTOR2.Distance2D    = VECTOR2.Distance
+VECTOR2.Distance2DSqr = VECTOR2.DistanceSqr
 
 function VECTOR2:Normalize()
     local l = self.x * self.x + self.y * self.y

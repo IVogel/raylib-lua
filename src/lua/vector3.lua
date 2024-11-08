@@ -68,6 +68,52 @@ function VECTOR3:Length2DSqr()
     return self.x * self.x + self.y * self.y
 end
 
+function VECTOR3:Distance(other)
+    if istype("Vector3", other) then
+        local dx = self.x - other.x
+        local dy = self.y - other.y
+        local dz = self.z - other.z
+        local d  = dx * dx + dy * dy + dz * dz
+        if d < 5.96e-08 then return 0 end
+        return math_sqrt(d)
+    else
+        error("Vector3 expected, got " .. type(other))
+    end
+end
+
+function VECTOR3:DistanceSqr(other)
+    if istype("Vector3", other) then
+        local dx = self.x - other.x
+        local dy = self.y - other.y
+        local dz = self.z - other.z
+        return dx * dx + dy * dy + dz * dz
+    else
+        error("Vector3 expected, got " .. type(other))
+    end
+end
+
+function VECTOR3:Distance2D(other)
+    if istype("Vector3", other) then
+        local dx = self.x - other.x
+        local dy = self.y - other.y
+        local d  = dx * dx + dy * dy
+        if d < 5.96e-08 then return 0 end
+        return math_sqrt(d)
+    else
+        error("Vector3 expected, got " .. type(other))
+    end
+end
+
+function VECTOR3:Distance2DSqr(other)
+    if istype("Vector3", other) then
+        local dx = self.x - other.x
+        local dy = self.y - other.y
+        return dx * dx + dy * dy
+    else
+        error("Vector3 expected, got " .. type(other))
+    end
+end
+
 function VECTOR3:Normalize()
     local l = self.x * self.x + self.y * self.y + self.z * self.z
     if l < 5.96e-08 then return end
