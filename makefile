@@ -89,7 +89,7 @@ src/raylua.o: luajit raylib src/autogen/boot.c src/autogen/bind.c
 
 src/raylua_builder.o: src/autogen/builder.c
 
-src/autogen/boot.c: src/raylib.lua src/lua/compat.lua src/raylua.lua
+src/autogen/boot.c: src/raylib.lua src/lua/compat.lua src/lua/vector2.lua src/lua/vector3.lua src/raylua.lua
 	$(LUA) tools/lua2str.lua $@ raylua_boot_lua $^
 
 src/autogen/bind.c:
